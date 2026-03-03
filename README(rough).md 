@@ -1,0 +1,74 @@
+# Research Notes: Quantum Feature Mapping and Data Encoding
+**Project:** Quantum Machine Learning (QML) Frameworks  
+**Author:** [Narainkarthi, Rajalakshmi Deepika ]  
+**Date:** February 15, 2026
+
+---
+
+## 1. Mathematical Foundations: The Qubit State
+The transition from classical bits to quantum states involves moving from discrete toggles to a continuous geometric representation.
+
+### 1.1 State Representation
+A single qubit is represented as: 
+$$|\psi\rangle = \alpha|0\rangle + \beta|1\rangle$$
+
+* **Classical Comparison:** A bit is a binary North/South pole toggle. 
+* **The Bloch Sphere:** A pure state exists on the surface (infinite precision in latitude/longitude). 
+* **Mixed States:** As noise/decoherence occurs, the vector shrinks toward the center. A point at the dead center represents a **Completely Mixed State**, where all quantum phase information is lost.
+
+### 1.2 Hilbert Space & Dimensionality
+* **Scaling:** Dimension scales exponentially ($D = 2^n$).
+* **Classical Comparison:** While an RBF kernel uses a "mathematical trick" to simulate infinite dimensions without creating vectors, Quantum systems physically inhabit this high-dimensional Hilbert Space.
+
+---
+
+## 2. Quantum Data Pipeline
+The process of transforming classical inputs into a quantum-computable format is non-trivial and dictates the hardware requirements.
+
+**Pipeline Flow:**
+`Classical Data` $\rightarrow$ `State Preparation (Ground)` $\rightarrow$ `Encoding (Pure State)` $\rightarrow$ `Processing (Transformation)` $\rightarrow$ `Decoherence (Mixed State/Noise)` $\rightarrow$ `Measurement (Collapse to Bit String)`
+
+### 2.1 Encoding Methodologies
+The choice of encoding determines circuit depth and qubit overhead.
+
+| Method | Scaling ($n$ qubits) | Pros | Cons |
+| :--- | :--- | :--- | :--- |
+| **Basis Encoding** | $1:1$ per bit | Simple mapping | No superposition; inefficient for continuous data. |
+| **Angle Encoding** | $n_{qubits} = n_{features}$ | Parameterized rotation | Qubit-heavy for high-dimensional data. |
+| **Amplitude Encoding** | $n_{qubits} = \log_2(n_{features})$ | Highly efficient scaling | Requires deep, complex circuits; highly noise-sensitive. |
+
+---
+
+## 3. Quantum Feature Maps: $\phi(x) \rightarrow |\psi(x)\rangle$
+Feature maps are the circuits that actually perform the mapping into Hilbert Space. 
+
+* **Objective:** Capture non-linear correlations through entanglement.
+* **Key Circuit Types:** * `ZFeatureMap`
+    * `ZZFeatureMap` (Uses CNOT gates to "entangle" features)
+    * `PauliFeatureMap`
+
+> **Note on Entanglement:** By using the **CNOT gate**, the model can capture complex correlations between features that are mathematically difficult to represent in classical linear models.
+
+---
+
+## 4. State Classification
+System states are categorized by information density and physical interaction.
+
+### 4.1 Information-Based
+* **Pure States:** Maximum information; represented by a point on the Bloch Sphere surface.
+* **Mixed States:** Reduced information due to interaction with the environment (Decoherence).
+
+### 4.2 Interaction & Computational
+* **Product States:** Separable systems (no correlation).
+* **Entangled States:** Non-separable; the "Quantum Washing Machine" effect where features are intrinsically linked.
+* **Computational Basis:** The standard $|0\rangle, |1\rangle$ states vs. **Superposition States** used during calculation.
+
+### 4.3 Physical Energy Levels
+* **Ground vs. Excited:** Baseline vs. energized states.
+* **Bound vs. Scattering:** System confinement dynamics.
+
+---
+
+## 5. Current Constraints & Observations
+* **Coherence vs. Decoherence:** The primary battle in NISQ-era hardware. If data is encoded poorly, the system perceives the signal as noise.
+* **Circuit Depth:** High-efficiency methods (like Amplitude encoding) are currently throttled by the "depth" of the circuit relative to the coherence time of the qubits.

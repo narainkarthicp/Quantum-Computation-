@@ -1,0 +1,315 @@
+\documentclass{beamer}
+\usetheme{Madrid}
+\usecolortheme{whale} 
+\usepackage[dvipsnames]{xcolor}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{booktabs}
+\usepackage[most]{tcolorbox}
+
+% ---------- Color Palette ----------
+\definecolor{ivorybg}{RGB}{248,246,240}
+\definecolor{charcoal}{RGB}{45,45,45}
+\definecolor{deepblue}{RGB}{28,70,120}
+\definecolor{softteal}{RGB}{52,120,112}
+\definecolor{softgold}{RGB}{191,161,111}
+
+\setbeamercolor{normal text}{fg=charcoal,bg=ivorybg}
+\setbeamercolor{structure}{fg=deepblue}
+\setbeamercolor{frametitle}{fg=white,bg=deepblue}
+\setbeamercolor{title}{fg=white,bg=deepblue}
+\setbeamercolor{section in toc}{fg=deepblue}
+
+\newtcolorbox{ResearchBox}[1]{
+    colback=ivorybg,
+    colframe=softgold,
+    coltitle=white,
+    colbacktitle=deepblue,
+    fonttitle=\bfseries,
+    title=#1,
+    arc=4pt,
+    boxrule=1.2pt
+}
+
+\title[QML Research]{Quantum Support Vector Machine for Prostate Cancer Detection}
+\subtitle{Comparative Analysis: Classical vs. Quantum Kernel Methods}
+\author{Narainkarthi}
+\date{Feb 2026}
+
+\begin{document}
+
+\maketitle
+
+%================================================
+\section{Classical Support Vector Machine}
+%================================================
+
+%------------------------------------------------
+\begin{frame}{1. Problem Setup: Linear Classification}
+
+\begin{ResearchBox}{Fundamental Goal}
+The fundamental goal of a Support Vector Machine (SVM) is to classify data points by finding an optimal boundary (Hyperplane).
+\end{ResearchBox}
+
+\begin{itemize}
+    \item \textbf{Input Data:} $x \in \mathbb{R}^d$, where $d$ is the number of features.
+    \item \textbf{Labels:} Binary classification using $y \in \{+1, -1\}$.
+    \item \textbf{Objective:} Identify the hyperplane that separates these classes with the \textbf{maximum possible margin}.
+\end{itemize}
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{2. Decision Boundary and Geometry}
+
+The hyperplane is mathematically defined by its orientation ($w$) and its position ($b$) in the feature space.
+
+\begin{itemize}
+    \item \textbf{Weight Vector ($w$):} Determines orientation and reflection of the boundary.
+    \item \textbf{Bias ($b$):} Shifts the hyperplane from the origin $(0,0)$.
+\end{itemize}
+
+\begin{ResearchBox}{Fundamental Constraint}
+\[
+y_i(w \cdot x_i + b) \ge 1
+\]
+\end{ResearchBox}
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{2. Decision Boundary and Geometry (Cont.)}
+
+\textbf{Classification Regions}
+
+\begin{itemize}
+    \item \textbf{Margin Edge (SV):}
+    \[
+    y_i(w \cdot x_i + b) = 1
+    \]
+    Lies exactly on the margin boundary.
+    
+    \item \textbf{Positive Side:}
+    \[
+    y_i(w \cdot x_i + b) > 1
+    \]
+    Lies within the positive class region.
+    
+    \item \textbf{Negative Side:}
+    \[
+    y_i(w \cdot x_i + b) < 1
+    \]
+    Lies within the negative class region.
+\end{itemize}
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{3. Objective Function}
+
+The goal is to maximize the margin width (distance between the two edges).
+
+\begin{itemize}
+    \item \textbf{Margin Width:}
+    \[
+    \frac{2}{\|w\|}
+    \]
+    
+    \item \textbf{Optimization Objective:}
+    Maximizing the margin is equivalent to minimizing the squared norm of the weights:
+\end{itemize}
+
+\[
+\min \frac{1}{2} \|w\|^2 
+\quad 
+\text{subject to} 
+\quad 
+y_i(w \cdot x_i + b) \ge 1
+\]
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{3. Objective Function (Cont.)}
+
+\begin{itemize}
+    \item \textbf{Support Vectors (SV):}
+    Only the data points lying on the margin define the hyperplane.
+    
+    \item The rest of the dataset does not influence the final boundary position.
+    
+    \item \textbf{Hard Margin:}
+    Requires strict separation.
+    
+    \item \textbf{Soft Margin:}
+    Allows some tolerance for data points inside the margin to handle noise.
+\end{itemize}
+
+\end{frame}
+
+%================================================
+\section{Kernel Methods}
+%================================================
+
+%------------------------------------------------
+\begin{frame}{4. The Kernel Trick: Handling Non-Linearity}
+
+When data cannot be separated by a straight line in its original space, we use a \textbf{Feature Map}.
+
+\begin{itemize}
+    \item \textbf{Dimension Lifting:}
+    Map data to a higher-dimensional space where linear separation exists.
+    
+    \item \textbf{Efficiency Problem:}
+    Explicit high-dimensional computation is expensive.
+    
+    \item \textbf{Kernel Trick:}
+    Compute only the dot product (similarity) in that higher dimension.
+    
+    \item \textbf{Gram Matrix:}
+    Similarity matrix built from kernel values.
+\end{itemize}
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{4. Example: Polynomial Kernel}
+
+For 2D vectors $A$ and $B$, consider:
+
+\[
+\phi(x) = (x_1^2, x_2^2, \sqrt{2}x_1x_2)
+\]
+
+Kernel:
+\[
+K(A,B) = (A \cdot B)^2
+\]
+
+If:
+\[
+A = (1,2), \quad B = (3,4)
+\]
+
+Inner product:
+\[
+(1 \times 3) + (2 \times 4) = 11
+\]
+
+Kernel result:
+\[
+11^2 = 121
+\]
+
+\end{frame}
+
+%================================================
+\section{Quantum Perspective}
+%================================================
+
+%------------------------------------------------
+\begin{frame}{5. The Balancing Act: Qubits vs Noise}
+
+Navigating the hardware limits of current Quantum Computing.
+
+\begin{itemize}
+    \item \textbf{The Qubit Dilemma:}
+    Increasing qubits increases decoherence and random noise.
+    
+    \item \textbf{The Gate Dilemma:}
+    Deeper circuits cause cumulative error.
+    
+    \item \textbf{Optimization Failure:}
+    Excessive noise leads to \textbf{Barren Plateaus}.
+\end{itemize}
+
+Gradients become flat and the model cannot find the optimal solution.
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{6. Pre-Processing: The Gateway to Orthogonality}
+
+Refining classical data to ensure unique and distinct quantum states.
+
+\begin{itemize}
+    \item \textbf{Standard Scaling:}
+    Prevents domination of specific features.
+    
+    \item \textbf{PCA (Principal Component Analysis):}
+    \begin{itemize}
+        \item Orthogonal components
+        \item Dimensionality reduction
+        \item Keeps circuit shallow
+    \end{itemize}
+    
+    \item Ensures each quantum state $|\psi(x_i)\rangle$ is distinct.
+\end{itemize}
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{7. Entering the Quantum World: The $[0,\pi]$ Map}
+
+Mapping classical data to the Bloch Sphere.
+
+\begin{itemize}
+    \item $0$ = North Pole ($|0\rangle$)
+    \item $\pi$ = South Pole ($|1\rangle$)
+    \item Half-circle mapping ensures uniqueness
+\end{itemize}
+
+Each qubit remains independent at this stage.
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{8. Transition: From Bloch Sphere to Hilbert Space}
+
+\begin{itemize}
+    \item Apply entanglement using CNOT gates
+    \item Move from individual Bloch spheres to unified Hilbert space
+    \item Dimensionality grows exponentially: $2^n$
+\end{itemize}
+
+Creates space for linear separation of complex non-linear data.
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{9. Hybrid Strategy: Quantum + Classical}
+
+\textbf{Quantum Strength:}
+
+\[
+K(x_i, x_j) = |\langle\psi(x_i)|\psi(x_j)\rangle|^2
+\]
+
+Measures physical overlap (similarity).
+
+\textbf{Classical Strength:}
+
+\begin{itemize}
+    \item Receives kernel matrix
+    \item Performs convex optimization
+    \item Draws final hyperplane
+\end{itemize}
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{10. Application: Quantum Object Tracking}
+
+\begin{itemize}
+    \item 2D video frames may contain overlapping objects
+    \item Classical trackers may oversimplify hidden features
+    \item Hilbert space provides richer separability
+\end{itemize}
+
+\begin{ResearchBox}{Research Question}
+Will quantum kernels improve real-time visual inference?
+\end{ResearchBox}
+
+\end{frame}
+
+\end{document}
